@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+img {
+  width: 100%;
+}
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.Bblue {
+  background-color: rgb(10, 96, 109);
+  color: white;
+}
+.Bblue > * {
+  font-size: 40px;
+}
+
+.missing_puppy {
+  background-color: red;
+  color: #000;
+}
+.missing_puppy p {
+  font-size: 25px;
+}
+@media (min-width: 992px) {
+  .missing_puppy p{
+    font-size: 45px;
+  }
+}
