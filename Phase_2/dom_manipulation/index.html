@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM Manipulation Playground</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header id="header">
+      <h1 id="app-title" class="title">DOM Manipulation Playground</h1>
+
+      <p id="subtitle">Practice Every DOM Concept</p>
+    </header>
+
+    <hr />
+
+    <!-- ===================================== -->
+    <!-- PROFILE -->
+    <!-- ===================================== -->
+
+    <section id="profile" class="profile">
+      <div class="profile-card">
+        <div class="profile-image-wrapper">
+          <img
+            id="profile-image"
+            src="https://picsum.photos/200"
+            alt="Profile Image"
+            width="200"
+          />
+        </div>
+      </div>
+
+      <h2 id="username">John Doe</h2>
+
+      <p id="profession">Full Stack Developer</p>
+
+      <button id="change-profile">Change Profile</button>
+    </section>
+
+    <hr />
+
+    <!-- ===================================== -->
+    <!-- COMPANY LIST -->
+    <!-- ===================================== -->
+
+    <section id="companies">
+      <h2>Companies</h2>
+
+      <ul id="company-list">
+        <li class="company green">Apple</li>
+
+        <li class="company green">Microsoft</li>
+
+        <li class="company green">Google</li>
+
+        <li class="company green">Tesla</li>
+
+        <li class="company green">Amazon</li>
+      </ul>
+
+      <button id="add-company">Add Company</button>
+
+      <button id="remove-company">Remove Last</button>
+    </section>
+
+    <hr />
+
+    <!-- ===================================== -->
+    <!-- CARD -->
+    <!-- ===================================== -->
+
+    <section id="card-section">
+      <div id="card" class="card active">
+        <h2 id="card-title" class="card-title">JavaScript DOM</h2>
+
+        <p class="card-text">
+          Learn how to manipulate the DOM using JavaScript.
+        </p>
+
+        <a id="course-link" href="https://freecodecamp.org" target="_blank">
+          Visit Course
+        </a>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- ===================================== -->
+    <!-- FORM -->
+    <!-- ===================================== -->
+
+    <section id="form-section">
+      <h2>User Form</h2>
+
+      <form id="user-form" novalidate>
+        <!-- NAME -->
+
+        <label for="name"> Name </label>
+
+        <input id="name" name="name" type="text" placeholder="Enter name" />
+
+        <div id="name-error" class="field-error" aria-live="polite"></div>
+
+        <!-- EMAIL -->
+
+        <label for="email"> Email </label>
+
+        <input id="email" name="email" type="email" placeholder="Enter email" />
+
+        <div id="email-error" class="field-error" aria-live="polite"></div>
+
+        <!-- COUNTRY -->
+
+        <label for="country"> Country </label>
+
+        <select id="country" name="country">
+          <option value="">Select country</option>
+
+          <option value="Ethiopia">Ethiopia</option>
+
+          <option value="USA">USA</option>
+
+          <option value="Canada">Canada</option>
+        </select>
+
+        <div id="country-error" class="field-error" aria-live="polite"></div>
+
+        <!-- MESSAGE -->
+
+        <label for="message"> Message </label>
+
+        <textarea id="message" name="message" placeholder="Message"></textarea>
+
+        <div id="message-error" class="field-error" aria-live="polite"></div>
+
+        <!-- SUCCESS MESSAGE -->
+
+        <div
+          id="success-message"
+          class="success-message"
+          aria-live="polite"
+        ></div>
+
+        <button id="submit-btn" type="submit">Submit</button>
+      </form>
+    </section>
+
+    <hr />
+
+    <!-- ===================================== -->
+    <!-- ATTRIBUTES -->
+    <!-- ===================================== -->
+
+    <section id="attributes">
+      <div
+        id="box"
+        class="box active"
+        data-user="Tamirat"
+        data-role="Developer"
+      >
+        Data Attribute Box
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- ===================================== -->
+    <!-- STYLE PRACTICE -->
+    <!-- ===================================== -->
+
+    <section id="style-section">
+      <h2 id="color-title">Style Practice</h2>
+
+      <button id="red-btn">Red</button>
+
+      <button id="green-btn">Green</button>
+
+      <button id="blue-btn">Blue</button>
+    </section>
+
+    <hr />
+
+    <!-- ===================================== -->
+    <!-- EVENTS -->
+    <!-- ===================================== -->
+
+    <section id="events">
+      <button id="click-btn">Click</button>
+
+      <button id="double-btn">Double Click</button>
+
+      <button id="hover-btn">Hover</button>
+
+      <button id="toggle-btn">Toggle</button>
+    </section>
+
+    <hr />
+
+    <!-- ===================================== -->
+    <!-- DYNAMIC CONTENT -->
+    <!-- ===================================== -->
+
+    <section id="dynamic">
+      <div id="container"></div>
+
+      <button id="create-element">Create Element</button>
+
+      <button id="remove-element">Remove Element</button>
+
+      <button id="replace-element">Replace Element</button>
+    </section>
+
+    <hr />
+
+    <!-- ===================================== -->
+    <!-- FOOTER -->
+    <!-- ===================================== -->
+
+    <footer id="footer">
+      <p>DOM Practice Project</p>
+    </footer>
+
+    <!-- ====================================================== -->
+    <!-- LOAD ONE PRACTICE FILE AT A TIME -->
+    <!-- ====================================================== -->
+
+    <!-- <script src="01-selecting-elements.js"></script> -->
+    <!-- <script src="02-reading-information.js"></script> -->
+    <!-- <script src="03-changing-content.js"></script> -->
+    <!-- <script src="04-styling-elements.js"></script> -->
+    <!-- <script src="05-class-manipulation.js"></script> -->
+    <!-- <script src="06-attributes.js"></script> -->
+    <!-- <script src="07-traversing.js"></script> -->
+    <!-- <script src="08-creating-elements.js"></script> -->
+    <!-- <script src="09-removing-replacing-elements.js"></script> -->
+
+    <script src="10-events.js"></script>
+  </body>
+</html>
