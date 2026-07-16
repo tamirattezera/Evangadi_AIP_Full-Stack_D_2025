@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>jQuery Engineering Lab</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- ===================================================== -->
+    <!-- HEADER -->
+    <!-- ===================================================== -->
+
+    <header id="header">
+      <h1 id="app-title" class="title">jQuery Engineering Lab</h1>
+
+      <p id="subtitle">Learn Professional jQuery from Beginner to Advanced</p>
+    </header>
+
+    <hr />
+
+    <!-- ===================================================== -->
+    <!-- NAVIGATION -->
+    <!-- ===================================================== -->
+
+    <nav id="navbar">
+      <ul id="nav-menu">
+        <li class="nav-item active">
+          <a href="#">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#">Dashboard</a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#">Products</a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#">Analytics</a>
+        </li>
+
+        <li class="nav-item">
+          <a href="#">Settings</a>
+        </li>
+      </ul>
+    </nav>
+
+    <hr />
+
+    <!-- ===================================================== -->
+    <!-- PROFILE -->
+    <!-- ===================================================== -->
+
+    <section id="profile">
+      <div class="profile-card">
+        <img
+          id="profile-image"
+          src="https://picsum.photos/220"
+          alt="Profile Image"
+        />
+
+        <h2 id="username">John Doe</h2>
+
+        <p id="profession">Frontend Developer</p>
+
+        <p id="location">Addis Ababa</p>
+
+        <button id="change-profile">Change Profile</button>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- ===================================================== -->
+    <!-- DASHBOARD -->
+    <!-- ===================================================== -->
+
+    <section id="dashboard">
+      <h2>Dashboard</h2>
+
+      <div id="dashboard-cards">
+        <div class="card">
+          <h3>Users</h3>
+
+          <p class="count">1450</p>
+        </div>
+
+        <div class="card">
+          <h3>Revenue</h3>
+
+          <p class="count">$84,000</p>
+        </div>
+
+        <div class="card">
+          <h3>Projects</h3>
+
+          <p class="count">36</p>
+        </div>
+
+        <div class="card">
+          <h3>Tasks</h3>
+
+          <p class="count">127</p>
+        </div>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- ===================================================== -->
+    <!-- AI COMPANIES -->
+    <!-- ===================================================== -->
+
+    <section id="companies">
+      <h2>AI Companies</h2>
+
+      <ul id="company-list">
+        <li class="company">OpenAI</li>
+
+        <li class="company">Anthropic</li>
+
+        <li class="company">Google DeepMind</li>
+
+        <li class="company">Microsoft AI</li>
+
+        <li class="company">NVIDIA</li>
+
+        <li class="company">Meta AI</li>
+
+        <li class="company">Perplexity</li>
+      </ul>
+
+      <button id="add-company">Add Company</button>
+
+      <button id="remove-company">Remove Company</button>
+    </section>
+
+    <hr />
+
+    <!-- ===================================================== -->
+    <!-- PRODUCTS -->
+    <!-- ===================================================== -->
+
+    <section id="products">
+      <h2>Products</h2>
+
+      <div id="product-grid">
+        <article class="product">
+          <h3>MacBook Pro</h3>
+
+          <p>$2499</p>
+        </article>
+
+        <article class="product">
+          <h3>Vision Pro</h3>
+
+          <p>$3499</p>
+        </article>
+
+        <article class="product">
+          <h3>Surface Laptop</h3>
+
+          <p>$1899</p>
+        </article>
+
+        <article class="product">
+          <h3>Galaxy Book</h3>
+
+          <p>$1699</p>
+        </article>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- ===================================================== -->
+    <!-- NOTIFICATIONS -->
+    <!-- ===================================================== -->
+
+    <section id="notifications">
+      <h2>Notifications</h2>
+
+      <ul id="notification-list">
+        <li class="notification success">Welcome Back</li>
+
+        <li class="notification warning">Payment Pending</li>
+
+        <li class="notification success">Profile Updated</li>
+
+        <li class="notification info">New AI Course Available</li>
+      </ul>
+    </section>
+
+    <hr />
+
+    <!-- ===================================================== -->
+    <!-- CARD -->
+    <!-- ===================================================== -->
+
+    <section id="course-card">
+      <div id="card" class="card featured">
+        <h2 id="card-title">JavaScript Mastery</h2>
+
+        <p class="card-description">Become a Professional Frontend Engineer.</p>
+
+        <a id="course-link" href="https://freecodecamp.org" target="_blank">
+          Visit Course
+        </a>
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- ===================================================== -->
+    <!-- FORM -->
+    <!-- ===================================================== -->
+
+    <section id="registration">
+      <h2>User Registration</h2>
+
+      <form id="user-form">
+        <input id="name" type="text" placeholder="Full Name" />
+
+        <input id="email" type="email" placeholder="Email" />
+
+        <input id="password" type="password" placeholder="Password" />
+
+        <select id="country">
+          <option>Ethiopia</option>
+          <option>USA</option>
+          <option>Canada</option>
+          <option>Germany</option>
+        </select>
+
+        <textarea id="message" placeholder="Tell us about yourself"></textarea>
+
+        <button id="submit-btn">Register</button>
+      </form>
+    </section>
+
+    <hr />
+
+    <!-- ===================================================== -->
+    <!-- DATA ATTRIBUTES -->
+    <!-- ===================================================== -->
+
+    <section id="data-section">
+      <div
+        id="user-box"
+        class="box"
+        data-user="Tamirat"
+        data-role="Developer"
+        data-level="Advanced"
+      >
+        User Information
+      </div>
+    </section>
+
+    <hr />
+
+    <!-- ===================================================== -->
+    <!-- EFFECTS -->
+    <!-- ===================================================== -->
+
+    <section id="effects">
+      <button id="hide-btn">Hide</button>
+
+      <button id="show-btn">Show</button>
+
+      <button id="toggle-btn">Toggle</button>
+
+      <button id="fade-btn">Fade</button>
+
+      <button id="slide-btn">Slide</button>
+    </section>
+
+    <hr />
+
+    <!-- ===================================================== -->
+    <!-- AJAX -->
+    <!-- ===================================================== -->
+
+    <section id="ajax-section">
+      <h2>AJAX Playground</h2>
+
+      <button id="load-users">Load Users</button>
+
+      <button id="load-posts">Load Posts</button>
+
+      <div id="ajax-content"></div>
+    </section>
+
+    <hr />
+
+    <!-- ===================================================== -->
+    <!-- DYNAMIC CONTENT -->
+    <!-- ===================================================== -->
+
+    <section id="dynamic">
+      <button id="create-card">Create Card</button>
+
+      <button id="remove-card">Remove Card</button>
+
+      <button id="replace-card">Replace Card</button>
+
+      <div id="dynamic-container"></div>
+    </section>
+
+    <hr />
+
+    <!-- ===================================================== -->
+    <!-- FOOTER -->
+    <!-- ===================================================== -->
+
+    <footer id="footer">
+      <p>jQuery Engineering Lab © 2026</p>
+    </footer>
+  </body>
+  <script src="jquery-4.0.0.js"></script>
+  <script src="01-selecting-elements.js"></script>
+</html>
