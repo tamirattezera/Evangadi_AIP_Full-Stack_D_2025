@@ -1,10 +1,8 @@
 // ============================================================
 // jQuery Engineering Lab
 // Phase 1: Selecting Elements
-//
 // Purpose:
 // Learn how to select HTML elements using jQuery selectors.
-//
 // jQuery syntax:
 //
 // $(selector)
