@@ -1,0 +1,9 @@
+{
+  "name": "nodejs-lab",
+  "version": "1.0.0",
+  "description": "Node.js learning laboratory for AI-powered full-stack development",
+  "type": "module",
+  "scripts": {
+    "start": "node phases/00-node-runtime/main.js"
+  }
+}
