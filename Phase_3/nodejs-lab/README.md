@@ -1,7 +1,5 @@
 # 🚀 Node.js Learning Lab
 
-# 🚀 Node.js Learning Lab
-
 ![Node.js](https://img.shields.io/badge/Node.js-LTS-339933?logo=node.js&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES2023-F7DF1E?logo=javascript&logoColor=black)
 ![Express.js](https://img.shields.io/badge/Express.js-Framework-000000?logo=express&logoColor=white)
