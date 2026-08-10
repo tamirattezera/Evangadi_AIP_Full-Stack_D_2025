@@ -1,14 +1,31 @@
 // ==========================================================
 // NODE.JS PROCESS MODULE
-// LESSON 03 — ENVIRONMENT VARIABLES
+// LESSON 03 — ENVIRONMENT CONFIGURATION
 // ==========================================================
 //
-// process.env provides access to environment variables
-// available to the currently running Node.js process.
+// Purpose:
+// Read application configuration from environment variables.
 //
 // ==========================================================
 
-console.log(process.env);
-console.log(process.env.HOME);
-console.log(process.env.USER);
-console.log(process.env.APP_NAME);
+const appName = process.env.APP_NAME;
+
+const port = process.env.PORT;
+
+const environment = process.env.NODE_ENV;
+
+const configuration = {
+  appName,
+  port,
+  environment,
+};
+
+console.log("========================================");
+
+console.log(" APPLICATION CONFIGURATION ");
+
+console.log("========================================");
+
+console.table(configuration);
+
+console.log("========================================");
