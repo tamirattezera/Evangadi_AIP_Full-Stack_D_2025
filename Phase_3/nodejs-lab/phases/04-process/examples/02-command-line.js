@@ -1,56 +1,63 @@
 // ==========================================================
 // NODE.JS PROCESS MODULE
-// LESSON 02 — COMMAND-LINE ARGUMENTS
+// COMMAND-LINE INPUT
+// TYPE CONVERSION & VALIDATION
 // ==========================================================
 //
 // Purpose:
-// Learn how a Node.js process receives user input from
-// the terminal through process.argv.
+// Convert raw command-line strings into useful application
+// values and validate required input before continuing.
 //
 // Example:
 //
 // node 02-command-line.js Tamirat 963 AI-Engineer Ethiopia
 //
-// process.argv provides the values as strings.
-//
 // ==========================================================
 
 // ==========================================================
-// 1. READ COMMAND-LINE INPUT
-// ==========================================================
-//
-// process.argv is an array.
-//
-// Index 0 → Node.js executable
-// Index 1 → Current JavaScript file
-// Index 2 → First user argument
-// Index 3 → Second user argument
-// Index 4 → Third user argument
-// Index 5 → Fourth user argument
-//
+// 1. READ RAW COMMAND-LINE INPUT
 // ==========================================================
 
 const name = process.argv[2];
 
-const id = process.argv[3];
+const rawId = process.argv[3];
 
 const role = process.argv[4];
 
 const country = process.argv[5];
 
 // ==========================================================
-// 2. BUILD STRUCTURED USER INPUT
+// 2. VALIDATE REQUIRED INPUT
 // ==========================================================
 //
-// At this stage, the values are intentionally kept as
-// strings.
+// The application requires four user values.
 //
-// Example:
-//
-// id → "963"
-//
-// We will learn type conversion and validation later.
-//
+// ==========================================================
+
+if (!name || !rawId || !role || !country) {
+  console.error("Error: name, id, role, and country are required.");
+
+  process.exit(1);
+}
+
+// ==========================================================
+// 3. CONVERT ID FROM STRING TO NUMBER
+// ==========================================================
+
+const id = Number(rawId);
+
+// ==========================================================
+// 4. VALIDATE THE CONVERTED ID
+// ==========================================================
+
+if (Number.isNaN(id)) {
+  console.error("Error: ID must be a valid number.");
+
+  process.exit(1);
+}
+
+// ==========================================================
+// 5. CREATE STRUCTURED APPLICATION DATA
 // ==========================================================
 
 const userInput = {
@@ -61,7 +68,7 @@ const userInput = {
 };
 
 // ==========================================================
-// 3. DISPLAY RESULT
+// 6. DISPLAY RESULT
 // ==========================================================
 
 console.log("========================================");
