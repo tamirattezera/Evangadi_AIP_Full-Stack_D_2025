@@ -1,86 +1,26 @@
 import http from "node:http";
 
 /**
- * ============================================================
- * HTTP REQUEST / RESPONSE
- * ============================================================
+ * Handles incoming HTTP requests and sends HTTP responses.
  *
- * Every HTTP interaction has two sides:
- *
- *        CLIENT
- *           │
- *           │ HTTP REQUEST
- *           ▼
- *        SERVER
- *           │
- *           │ HTTP RESPONSE
- *           ▼
- *        CLIENT
- *
- * req → incoming HTTP request
- * res → outgoing HTTP response
- */
-
-/**
- * ============================================================
- * CREATE HTTP SERVER
- * ============================================================
+ * req → incoming request
+ * res → outgoing response
  */
 const server = http.createServer((req, res) => {
-  /**
-   * ==========================================================
-   * REQUEST
-   * ==========================================================
-   *
-   * The `req` object represents the request sent by the
-   * client.
-   *
-   * Important properties:
-   *
-   * req.method
-   *     → HTTP method
-   *
-   * req.url
-   *     → requested URL
-   *
-   * req.headers
-   *     → HTTP request headers
-   */
-  console.log("\n==============================");
-  console.log("        HTTP REQUEST");
-  console.log("==============================");
-
+  console.log("\n--- HTTP Request ---");
   console.log(`Method: ${req.method}`);
   console.log(`URL: ${req.url}`);
 
   console.log("\nHeaders:");
   console.log(req.headers);
 
-  /**
-   * ==========================================================
-   * RESPONSE
-   * ==========================================================
-   *
-   * The `res` object allows the server to construct the
-   * response sent back to the client.
-   */
-
-  // HTTP status code.
+  // HTTP status code: 200 OK.
   res.statusCode = 200;
 
-  /**
-   * Response header.
-   *
-   * This tells the client that the response body is plain text
-   * encoded as UTF-8.
-   */
+  // Tell the client the response body is UTF-8 plain text.
   res.setHeader("Content-Type", "text/plain; charset=utf-8");
 
-  /**
-   * Send the response body and finish the response.
-   *
-   * Once res.end() is called, the response is complete.
-   */
+  // Sends the response body and signals that the response is complete.
   res.end(
     `Hello from Node.js!
 
@@ -90,17 +30,8 @@ URL: ${req.url}
   );
 });
 
-/**
- * ============================================================
- * SERVER CONFIGURATION
- * ============================================================
- */
-
 const PORT = 3000;
 
-/**
- * Start listening for TCP connections on port 3000.
- */
 server.listen(PORT, () => {
   console.log(`HTTP server running at http://localhost:${PORT}`);
 });
