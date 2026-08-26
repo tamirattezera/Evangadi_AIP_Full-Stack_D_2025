@@ -2,6 +2,14 @@
 
 ## Node.js Runtime Architecture Lab
 
+![Node.js](https://img.shields.io/badge/Node.js-24.x-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![HTTP](https://img.shields.io/badge/HTTP-Deep%20Dive-005571?style=for-the-badge&logo=http&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES2025-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Status](https://img.shields.io/badge/Status-In%20Progress-orange?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
+
+> Deep mastery of Node.js HTTP — from HTTP fundamentals and TCP networking to streams, performance, security, and production engineering.
+
 The HTTP Server module explores how Node.js applications communicate over HTTP without relying on frameworks such as Express.
 
 The module focuses on understanding the native `node:http` API, the HTTP request/response lifecycle, network communication, streams, event-driven execution, and the architectural foundations upon which Express and modern backend APIs are built.
@@ -12,7 +20,7 @@ The module focuses on understanding the native `node:http` API, the HTTP request
 
 This module belongs to the following Node.js runtime learning architecture:
 
-```text
+```
 Runtime
    ↓
 Modules
@@ -41,6 +49,7 @@ npm
    ↓
 Express
 ```
+
 ````
 
 HTTP Server represents the transition from Node.js runtime fundamentals into backend and API engineering.
@@ -82,7 +91,7 @@ By completing this module, the developer should understand:
 
 The fundamental HTTP model is:
 
-```text
+```
 Client
    │
    │ HTTP Request
@@ -96,10 +105,11 @@ HTTP Response
    ▼
 Client
 ```
+---
 
 A request contains information such as:
 
-```text
+```
 HTTP Request
 │
 ├── Method
@@ -110,7 +120,7 @@ HTTP Request
 
 A response contains:
 
-```text
+```
 HTTP Response
 │
 ├── Status Code
@@ -126,25 +136,25 @@ The developer's responsibility is to understand how these components move throug
 
 The core module for this phase is:
 
-```js
+```javascript
 import http from "node:http";
 ```
 
 The most important API is:
 
-```js
+```javascript
 http.createServer();
 ```
 
 A server can then begin listening for network connections using:
 
-```js
+```javascript
 server.listen();
 ```
 
 The basic lifecycle is:
 
-```text
+```
 http.createServer()
         ↓
 request arrives
@@ -166,7 +176,7 @@ client receives response
 
 The module follows the progression:
 
-```text
+```
 CONCEPT
    ↓
 API
@@ -223,7 +233,7 @@ Understanding:
 
 Understanding the native Node.js HTTP module.
 
-```js
+```javascript
 import http from "node:http";
 ```
 
@@ -233,7 +243,7 @@ import http from "node:http";
 
 Understanding:
 
-```js
+```javascript
 http.createServer();
 ```
 
@@ -245,7 +255,7 @@ and how Node invokes the request handler when an HTTP request arrives.
 
 Understanding:
 
-```js
+```javascript
 request.method;
 request.url;
 ```
@@ -258,7 +268,7 @@ and other request properties.
 
 Understanding:
 
-```js
+```javascript
 response.statusCode;
 response.setHeader();
 response.write();
@@ -271,7 +281,7 @@ response.end();
 
 Understanding common HTTP methods:
 
-```text
+```
 GET
 POST
 PUT
@@ -287,7 +297,7 @@ and the purpose of each.
 
 Understanding URLs such as:
 
-```text
+```
 /users?page=2&limit=10
 ```
 
@@ -299,7 +309,7 @@ and connecting the HTTP layer to the Node.js `URL` module.
 
 Understanding:
 
-```text
+```
 Content-Type
 Content-Length
 Authorization
@@ -315,7 +325,7 @@ and how headers communicate metadata between clients and servers.
 
 Understanding categories:
 
-```text
+```
 1xx → Informational
 
 2xx → Success
@@ -329,7 +339,7 @@ Understanding categories:
 
 Common examples:
 
-```text
+```
 200 OK
 201 Created
 204 No Content
@@ -348,7 +358,7 @@ Common examples:
 
 Understanding how Node sends:
 
-```text
+```
 text
 HTML
 JSON
@@ -371,7 +381,7 @@ Understanding how a Node HTTP server produces API responses:
 
 and correctly communicates:
 
-```text
+```
 Content-Type: application/json
 ```
 
@@ -383,7 +393,7 @@ Understanding how data sent by clients reaches Node.js.
 
 Examples:
 
-```text
+```
 POST
 PUT
 PATCH
@@ -397,7 +407,7 @@ The request body will be connected directly to the Stream and Buffer modules.
 
 Understanding the relationship:
 
-```text
+```
 HTTP Request
       ↓
 Readable Stream
@@ -421,7 +431,7 @@ This is particularly important for:
 
 Understanding how a native Node.js server can distinguish:
 
-```text
+```
 GET /
 GET /users
 GET /products
@@ -452,7 +462,7 @@ Understanding how a Node.js server can respond to operating-system signals and s
 
 The concepts include:
 
-```text
+```
 process
    ↓
 SIGINT
@@ -472,7 +482,7 @@ HTTP does not exist independently from the Node.js runtime.
 
 The architecture can be viewed as:
 
-```text
+```
 Client
    │
    │ Network
@@ -502,7 +512,7 @@ Node.js HTTP servers are event-driven.
 
 Conceptually:
 
-```text
+```
 HTTP activity
       ↓
 Events
@@ -514,7 +524,7 @@ Application logic
 
 This connects directly to the Events module:
 
-```text
+```
 Events
    ↓
 HTTP
@@ -528,7 +538,7 @@ HTTP data can contain binary information.
 
 Examples include:
 
-```text
+```
 images
 videos
 PDFs
@@ -539,13 +549,13 @@ compressed data
 
 Node.js represents raw binary data using:
 
-```js
+```javascript
 Buffer;
 ```
 
 The relationship becomes:
 
-```text
+```
 HTTP
  ↓
 Stream
@@ -563,7 +573,7 @@ HTTP request and response objects behave as streams.
 
 Conceptually:
 
-```text
+```
 HTTP Request
       ↓
 Readable Stream
@@ -575,7 +585,7 @@ Buffers
 
 and:
 
-```text
+```
 Application
       ↓
 Writable HTTP Response
@@ -595,7 +605,7 @@ HTTP and `fs` frequently work together.
 
 For example:
 
-```text
+```
 Client
    │
    │ GET /image
@@ -617,7 +627,7 @@ Client
 
 File uploads reverse the direction:
 
-```text
+```
 Client
    │
    │ HTTP upload
@@ -639,7 +649,7 @@ The `process` module becomes important for server configuration and lifecycle ma
 
 Examples include:
 
-```text
+```
 process.env
 process.argv
 process.on()
@@ -647,7 +657,7 @@ process.on()
 
 A production server may use:
 
-```text
+```
 Environment Variables
         ↓
 process.env
@@ -657,7 +667,7 @@ Server Configuration
 
 Graceful shutdown can use:
 
-```text
+```
 process
    ↓
 SIGINT / SIGTERM
@@ -675,13 +685,13 @@ HTTP requests contain URLs.
 
 Node's `URL` API can parse:
 
-```text
+```
 /users?page=2&limit=20
 ```
 
 into structured information:
 
-```text
+```
 pathname
 searchParams
 protocol
@@ -699,7 +709,7 @@ Express will be introduced only after the native HTTP model is understood.
 
 The architectural relationship is:
 
-```text
+```
 Express
    ↓
 Node.js HTTP
@@ -709,7 +719,7 @@ Network
 
 Express simplifies common backend tasks such as:
 
-```text
+```
 routing
 middleware
 request parsing
@@ -731,7 +741,7 @@ HTTP servers should avoid unnecessary synchronous operations inside request hand
 
 Avoid:
 
-```js
+```javascript
 readFileSync();
 ```
 
@@ -743,7 +753,7 @@ for request-time operations when asynchronous alternatives are appropriate.
 
 Client input must never automatically be considered trustworthy.
 
-```text
+```
 HTTP Request
      ↓
 Validation
@@ -757,7 +767,7 @@ Application Logic
 
 Responses should communicate meaningful outcomes.
 
-```text
+```
 Success → 2xx
 Client problem → 4xx
 Server problem → 5xx
@@ -771,7 +781,7 @@ The server should explicitly communicate the format of response data.
 
 Example:
 
-```text
+```
 Content-Type: application/json
 ```
 
@@ -781,7 +791,7 @@ Content-Type: application/json
 
 Servers must properly manage:
 
-```text
+```
 streams
 files
 connections
@@ -795,7 +805,7 @@ shutdown
 
 HTTP applications must consider:
 
-```text
+```
 input validation
 payload limits
 authentication
@@ -812,7 +822,7 @@ Security will become more important when Express and authentication are introduc
 
 The module follows the standard Node.js runtime lab structure:
 
-```text
+```
 11-http-server/
 │
 ├── README.md
@@ -849,7 +859,7 @@ The goal is to understand the underlying architecture well enough that framework
 
 The desired progression is:
 
-```text
+```
 Node Runtime
      ↓
 Native HTTP
@@ -875,7 +885,7 @@ Production APIs
 
 After completing this module, the developer should be able to reason about a request using the following model:
 
-```text
+```
                  CLIENT
                     │
                     │ HTTP Request
@@ -958,3 +968,4 @@ The HTTP Server module is considered complete when the developer can:
 The developer should understand what Node.js is doing underneath Express before depending on Express to do it automatically.
 
 ```
+````
