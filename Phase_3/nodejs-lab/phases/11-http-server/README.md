@@ -50,7 +50,7 @@ npm
 Express
 ```
 
-````
+---
 
 HTTP Server represents the transition from Node.js runtime fundamentals into backend and API engineering.
 
@@ -105,6 +105,7 @@ HTTP Response
    ▼
 Client
 ```
+
 ---
 
 A request contains information such as:
@@ -966,6 +967,3 @@ The HTTP Server module is considered complete when the developer can:
 > **Understand the protocol before learning the framework.**
 
 The developer should understand what Node.js is doing underneath Express before depending on Express to do it automatically.
-
-```
-````
