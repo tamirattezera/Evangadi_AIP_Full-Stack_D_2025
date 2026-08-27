@@ -1,13 +1,15 @@
 import http from "node:http";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { createReadStream } from "node:fs";
+import { stat } from "node:fs/promises";
 
 /**
  * ============================================================
- * 1. Resolve the current module's directory
+ * 1. Resolve the directory containing this module
  * ============================================================
  *
- * In ES modules, __dirname is not available automatically.
+ * ES modules do not provide __dirname automatically.
  *
  * import.meta.url
  *      ↓
@@ -17,97 +19,100 @@ import { fileURLToPath } from "node:url";
  *      ↓
  * path.dirname()
  *      ↓
- * directory containing this file
+ * examples/
  */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 /**
  * ============================================================
- * 2. Define the STATIC PUBLIC DIRECTORY
+ * 2. Define the public directory
  * ============================================================
  *
- * Our project structure:
+ * Only files inside this directory are allowed to be served.
  *
- * 11-http-server/
- * ├── examples/
- * │   └── 07-static-files.js
- * │
- * └── resources/
- *     └── public/
- *         ├── index.html
- *         ├── about.html
- *         └── style.css
- *
- * __dirname points to:
- *
- *     .../11-http-server/examples
- *
- * So we move:
- *
- *     .. → 11-http-server
- *
- * and then:
- *
- *     resources/public
+ * resources/
+ * └── public/
+ *     ├── index.html
+ *     ├── about.html
+ *     └── style.css
  */
 const publicDir = path.resolve(__dirname, "..", "resources", "public");
 
-console.log("Public directory:", publicDir);
+/**
+ * ============================================================
+ * 3. Supported MIME types
+ * ============================================================
+ *
+ * The browser needs to know what type of content it receives.
+ */
+const contentTypes = {
+  ".html": "text/html; charset=utf-8",
+  ".css": "text/css; charset=utf-8",
+  ".js": "text/javascript; charset=utf-8",
+  ".json": "application/json; charset=utf-8",
+  ".txt": "text/plain; charset=utf-8",
+  ".svg": "image/svg+xml",
+  ".png": "image/png",
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".gif": "image/gif",
+  ".ico": "image/x-icon",
+};
 
 /**
  * ============================================================
- * 3. Create HTTP server
+ * 4. Create HTTP server
  * ============================================================
  */
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   /**
    * ----------------------------------------------------------
-   * STEP 1 — Parse the incoming HTTP URL
+   * STEP 1 — Only allow GET and HEAD
    * ----------------------------------------------------------
    *
-   * Example request:
+   * Static file serving normally uses GET.
    *
-   *     /style.css?version=1
+   * HEAD is useful because it asks for the response headers
+   * without requiring the response body.
+   */
+  if (req.method !== "GET" && req.method !== "HEAD") {
+    res.statusCode = 405;
+    res.setHeader("Allow", "GET, HEAD");
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+
+    res.end("Method Not Allowed");
+    return;
+  }
+
+  /**
+   * ----------------------------------------------------------
+   * STEP 2 — Parse URL
+   * ----------------------------------------------------------
    *
-   * requestUrl.pathname:
+   * Example:
    *
-   *     /style.css
+   * /style.css?version=1
    *
-   * requestUrl.search:
+   * becomes:
    *
-   *     ?version=1
+   * pathname = /style.css
+   * search   = ?version=1
    */
   const requestUrl = new URL(req.url, `http://${req.headers.host}`);
 
-  /**
-   * ----------------------------------------------------------
-   * STEP 2 — Extract pathname
-   * ----------------------------------------------------------
-   *
-   * The pathname represents the resource requested by
-   * the client.
-   */
   let pathname = requestUrl.pathname;
-
-  console.log("\n--- HTTP Request ---");
-  console.log("Method:", req.method);
-  console.log("URL:", req.url);
-  console.log("Pathname:", pathname);
-  console.log("Query:", requestUrl.search || "(none)");
 
   /**
    * ----------------------------------------------------------
    * STEP 3 — Default document
    * ----------------------------------------------------------
    *
-   * When the browser requests:
+   * GET /
    *
-   *     /
+   * becomes:
    *
-   * we interpret that as:
-   *
-   *     /index.html
+   * GET /index.html
    */
   if (pathname === "/") {
     pathname = "/index.html";
@@ -115,68 +120,249 @@ const server = http.createServer((req, res) => {
 
   /**
    * ----------------------------------------------------------
-   * STEP 4 — Convert URL pathname into a filesystem path
+   * STEP 4 — Decode URL pathname
    * ----------------------------------------------------------
    *
    * Example:
    *
-   *     pathname
-   *     /about.html
+   * /about%2Ehtml
    *
    * becomes:
    *
-   *     .../resources/public/about.html
+   * /about.html
    *
-   * IMPORTANT:
+   * decodeURIComponent() can throw for malformed encoding,
+   * so handle it safely.
+   */
+  try {
+    pathname = decodeURIComponent(pathname);
+  } catch {
+    res.statusCode = 400;
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+
+    res.end("Bad Request");
+    return;
+  }
+
+  /**
+   * ----------------------------------------------------------
+   * STEP 5 — Convert URL path into filesystem path
+   * ----------------------------------------------------------
    *
-   * We are only calculating the path at this stage.
+   * The leading "." prevents pathname beginning with "/"
+   * from replacing publicDir during path resolution.
    *
-   * We are NOT reading or streaming the file yet.
+   * Example:
+   *
+   * publicDir:
+   *   /project/resources/public
+   *
+   * pathname:
+   *   /about.html
+   *
+   * result:
+   *   /project/resources/public/about.html
    */
   const requestedFile = path.resolve(publicDir, `.${pathname}`);
 
   /**
    * ----------------------------------------------------------
-   * STEP 5 — Display the mapping
+   * STEP 6 — SECURITY: prevent path traversal
    * ----------------------------------------------------------
    *
-   * This allows us to understand exactly how the HTTP URL
-   * maps to the filesystem.
+   * The requested file must remain inside publicDir.
+   *
+   * We append path.sep so that:
+   *
+   * /public
+   *
+   * does not incorrectly match:
+   *
+   * /public-secret
    */
-  console.log("Public directory:", publicDir);
-  console.log("Requested pathname:", pathname);
-  console.log("Resolved file:", requestedFile);
+  const publicRoot = publicDir.endsWith(path.sep)
+    ? publicDir
+    : `${publicDir}${path.sep}`;
+
+  const isInsidePublicDirectory =
+    requestedFile === publicDir || requestedFile.startsWith(publicRoot);
+
+  if (!isInsidePublicDirectory) {
+    res.statusCode = 403;
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+
+    res.end("Forbidden");
+    return;
+  }
 
   /**
    * ----------------------------------------------------------
-   * TEMPORARY RESPONSE
+   * STEP 7 — Inspect filesystem entry
    * ----------------------------------------------------------
    *
-   * We haven't implemented file serving yet.
+   * We need to distinguish:
+   *
+   *   file exists
+   *   directory exists
+   *   file does not exist
    */
+  let fileStats;
+
+  try {
+    fileStats = await stat(requestedFile);
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      res.statusCode = 404;
+      res.setHeader("Content-Type", "text/plain; charset=utf-8");
+
+      res.end("404 - File Not Found");
+      return;
+    }
+
+    console.error("Filesystem error:", error);
+
+    res.statusCode = 500;
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+
+    res.end("500 - Internal Server Error");
+    return;
+  }
+
+  /**
+   * ----------------------------------------------------------
+   * STEP 8 — Prevent serving directories
+   * ----------------------------------------------------------
+   *
+   * We want files, not directories.
+   */
+  if (!fileStats.isFile()) {
+    res.statusCode = 404;
+    res.setHeader("Content-Type", "text/plain; charset=utf-8");
+
+    res.end("404 - File Not Found");
+    return;
+  }
+
+  /**
+   * ----------------------------------------------------------
+   * STEP 9 — Determine Content-Type
+   * ----------------------------------------------------------
+   */
+  const extension = path.extname(requestedFile).toLowerCase();
+
+  const contentType = contentTypes[extension] ?? "application/octet-stream";
+
   res.statusCode = 200;
 
-  res.setHeader("Content-Type", "text/plain; charset=utf-8");
+  res.setHeader("Content-Type", contentType);
 
-  res.end(
-    `Stage 2 — URL → Filesystem Path
+  /**
+   * Content-Length allows the client to know the size
+   * of the response body.
+   */
+  res.setHeader("Content-Length", fileStats.size);
 
-Pathname:
-${pathname}
+  /**
+   * ----------------------------------------------------------
+   * STEP 10 — HEAD request
+   * ----------------------------------------------------------
+   *
+   * HEAD returns headers but no response body.
+   */
+  if (req.method === "HEAD") {
+    res.end();
+    return;
+  }
 
-Resolved file:
-${requestedFile}
-`,
-  );
+  /**
+   * ----------------------------------------------------------
+   * STEP 11 — Stream the file
+   * ----------------------------------------------------------
+   *
+   * IMPORTANT:
+   *
+   * We do NOT do:
+   *
+   *   await readFile(requestedFile)
+   *
+   * because that buffers the complete file in memory.
+   *
+   * Instead:
+   *
+   *   File
+   *    ↓
+   *   Readable Stream
+   *    ↓
+   *   ServerResponse
+   */
+  const fileStream = createReadStream(requestedFile);
+
+  /**
+   * ----------------------------------------------------------
+   * STEP 12 — Handle filesystem stream errors
+   * ----------------------------------------------------------
+   *
+   * The file may disappear or become inaccessible after stat()
+   * but before/during streaming.
+   */
+  fileStream.on("error", (error) => {
+    console.error("File stream error:", error);
+
+    /**
+     * If headers have already been sent, we cannot safely
+     * change the HTTP status code.
+     */
+    if (!res.headersSent) {
+      res.statusCode = 500;
+      res.setHeader("Content-Type", "text/plain; charset=utf-8");
+
+      res.end("500 - Internal Server Error");
+    } else {
+      res.destroy(error);
+    }
+  });
+
+  /**
+   * ----------------------------------------------------------
+   * STEP 13 — Client disconnect
+   * ----------------------------------------------------------
+   *
+   * If the client disconnects before the response finishes,
+   * stop the file stream.
+   */
+  req.on("close", () => {
+    if (!res.writableEnded) {
+      fileStream.destroy();
+    }
+  });
+
+  /**
+   * ----------------------------------------------------------
+   * STEP 14 — Connect the streams
+   * ----------------------------------------------------------
+   *
+   * Readable:
+   *
+   *   fileStream
+   *
+   * Writable:
+   *
+   *   res
+   *
+   * pipe() connects them.
+   */
+  fileStream.pipe(res);
 });
 
 /**
  * ============================================================
- * 4. Start HTTP server
+ * 5. Start server
  * ============================================================
  */
 const PORT = 3000;
 
 server.listen(PORT, () => {
-  console.log(`\nServer running at http://localhost:${PORT}`);
+  console.log(`Static file server running at http://localhost:${PORT}`);
+
+  console.log(`Public directory: ${publicDir}`);
 });
