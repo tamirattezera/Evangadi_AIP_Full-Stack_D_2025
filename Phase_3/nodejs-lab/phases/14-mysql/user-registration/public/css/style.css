@@ -1,0 +1,118 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f4f6f8;
+}
+
+.container {
+  width: 100%;
+  max-width: 500px;
+  padding: 24px;
+}
+
+.registration-card {
+  background: white;
+
+  padding: 40px;
+
+  border-radius: 16px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.header {
+  margin-bottom: 30px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+
+  color: #555;
+}
+
+h1 {
+  margin: 0 0 12px;
+
+  font-size: 32px;
+}
+
+.description {
+  margin: 0;
+
+  color: #666;
+  line-height: 1.6;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+
+  padding: 14px;
+
+  border: 1px solid #ccc;
+  border-radius: 8px;
+
+  font-size: 16px;
+}
+
+input:focus {
+  outline: none;
+
+  border-color: #333;
+}
+
+button {
+  width: 100%;
+
+  padding: 14px;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  background: #111;
+  color: white;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+.message {
+  min-height: 24px;
+
+  margin: 20px 0 0;
+
+  text-align: center;
+  font-weight: bold;
+}
