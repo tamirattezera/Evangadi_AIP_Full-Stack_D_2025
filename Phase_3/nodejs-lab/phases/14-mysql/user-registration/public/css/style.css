@@ -116,3 +116,48 @@ button:hover {
   text-align: center;
   font-weight: bold;
 }
+.users-section {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #ddd;
+}
+
+.users-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.users-header h2 {
+  margin: 0;
+}
+
+.users-header button {
+  width: auto;
+  padding: 10px 16px;
+}
+
+.users-list {
+  margin-top: 20px;
+  display: grid;
+  gap: 12px;
+}
+
+.user-card {
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.user-card h3 {
+  margin: 0 0 8px;
+}
+
+.user-card p {
+  margin: 0 0 8px;
+}
+
+.user-card small {
+  color: #666;
+}

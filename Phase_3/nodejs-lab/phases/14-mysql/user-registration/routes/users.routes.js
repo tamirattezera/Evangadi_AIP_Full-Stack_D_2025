@@ -3,6 +3,10 @@ import connection from "../database/connection.js";
 
 const router = Router();
 
+// ==========================================
+// CREATE USER
+// POST /api/users
+// ==========================================
 router.post("/", async (req, res) => {
   const { name, email } = req.body;
 
@@ -34,10 +38,41 @@ router.post("/", async (req, res) => {
     });
   } catch (error) {
     if (error.code === "ER_DUP_ENTRY") {
-      return res.status(409).json({ message: "Email already registered." });
+      return res.status(409).json({
+        message: "Email already registered.",
+      });
     }
+
     console.error("Failed to create user:", error.message);
-    res.status(500).json({ message: "Failed to create user." });
+
+    res.status(500).json({
+      message: "Failed to create user.",
+    });
+  }
+});
+
+// ==========================================
+// GET ALL USERS
+// GET /api/users
+// ==========================================
+router.get("/", async (req, res) => {
+  try {
+    const [users] = await connection.execute(`
+      SELECT id, name, email, created_at
+      FROM users
+      ORDER BY id DESC
+    `);
+
+    res.status(200).json({
+      message: "Users retrieved successfully.",
+      users,
+    });
+  } catch (error) {
+    console.error("Failed to retrieve users:", error.message);
+
+    res.status(500).json({
+      message: "Failed to retrieve users.",
+    });
   }
 });
 
