@@ -76,4 +76,48 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { name, email } = req.body;
+
+  try {
+    if (!name || !email) {
+      return res.status(400).json({
+        message: "Name and email are required.",
+      });
+    }
+
+    // Update the user
+    const [result] = await connection.execute(
+      `
+        UPDATE users
+        SET name = ?, email = ?
+        WHERE id = ?
+      `,
+      [name, email, id],
+    );
+
+    // Check whether a user was actually updated
+    if (result.affectedRows === 0) {
+      return res.status(404).json({
+        message: "User not found.",
+      });
+    }
+
+    res.status(200).json({
+      message: "User updated successfully.",
+      user: {
+        id: Number(id),
+        name,
+        email,
+      },
+    });
+  } catch (error) {
+    console.error("Failed to update user:", error.message);
+
+    res.status(500).json({
+      message: "Failed to update user.",
+    });
+  }
+});
 export default router;

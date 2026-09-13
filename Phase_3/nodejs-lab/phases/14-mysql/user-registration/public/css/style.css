@@ -161,3 +161,22 @@ button:hover {
 .user-card small {
   color: #666;
 }
+.edit-section {
+  margin-top: 32px;
+  padding-top: 24px;
+
+  border-top: 1px solid #ddd;
+}
+
+.edit-section h2 {
+  margin-bottom: 20px;
+}
+
+.edit-user {
+  width: auto;
+
+  margin-top: 12px;
+  padding: 8px 14px;
+
+  font-size: 14px;
+}
