@@ -5,12 +5,14 @@ import Dashboard from "../dashboard/Dashboard";
 
 class HotelShell extends React.Component {
   render() {
+    const { navigationItems, hotelName, user } = this.props;
+
     return (
       <div>
-        <Sidebar />
+        <Sidebar items={navigationItems} />
 
         <div>
-          <Topbar />
+          <Topbar hotelName={hotelName} user={user} />
 
           <main>
             <Dashboard />
