@@ -1,0 +1,87 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, Arial, sans-serif;
+  background: #f6f7f9;
+  color: #172033;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+aside {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 240px;
+  padding: 24px;
+  background: #111827;
+  color: white;
+}
+
+aside h1 {
+  margin: 0 0 32px;
+  font-size: 18px;
+}
+
+aside nav {
+  display: grid;
+  gap: 12px;
+}
+
+aside nav p {
+  margin: 0;
+  color: #aeb7c6;
+}
+
+header {
+  margin-left: 240px;
+  height: 80px;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+header p,
+header h2 {
+  margin: 0;
+}
+
+header p {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+main {
+  margin-left: 240px;
+  padding: 40px 32px;
+}
+
+section {
+  max-width: 1200px;
+}
+
+section h1 {
+  margin-bottom: 8px;
+}
+
+section > p {
+  color: #6b7280;
+}
+
+section > div {
+  margin-top: 32px;
+  padding: 24px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+}
