@@ -8,6 +8,7 @@ class Rooms extends React.Component {
 
     this.state = {
       selectedRoom: null,
+      filter: "All",
     };
   }
 
@@ -17,15 +18,44 @@ class Rooms extends React.Component {
     });
   };
 
+  handleFilterChange = (filter) => {
+    this.setState({
+      filter,
+    });
+  };
+
   render() {
-    const { selectedRoom } = this.state;
+    const { selectedRoom, filter } = this.state;
+
+    const filteredRooms =
+      filter === "All"
+        ? rooms
+        : rooms.filter((room) => room.status === filter);
 
     return (
       <section>
         <h1>Rooms</h1>
 
         <div>
-          {rooms.map((room) => (
+          <button onClick={() => this.handleFilterChange("All")}>
+            All
+          </button>
+
+          <button onClick={() => this.handleFilterChange("Ready")}>
+            Ready
+          </button>
+
+          <button onClick={() => this.handleFilterChange("Occupied")}>
+            Occupied
+          </button>
+
+          <button onClick={() => this.handleFilterChange("Cleaning")}>
+            Cleaning
+          </button>
+        </div>
+
+        <div>
+          {filteredRooms.map((room) => (
             <RoomCard
               key={room.id}
               room={room}
