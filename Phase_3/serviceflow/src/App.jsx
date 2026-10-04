@@ -1,8 +1,26 @@
+import { useState } from "react";
+
 import Header from "./components/layout/Header";
 import Sidebar from "./components/layout/Sidebar";
 import StatCard from "./components/dashboard/StatCard";
 
 function App() {
+  const [customerCount, setCustomerCount] = useState(24);
+  const [appointmentCount, setAppointmentCount] = useState(12);
+  const [pendingCount, setPendingCount] = useState(8);
+
+  function handleAddCustomer() {
+    setCustomerCount((currentCount) => currentCount + 1);
+  }
+
+  function handleAddAppointment() {
+    setAppointmentCount((currentCount) => currentCount + 1);
+  }
+
+  function handleCompleteAppointment() {
+    setPendingCount((currentCount) => Math.max(0, currentCount - 1));
+  }
+
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="flex min-h-screen">
@@ -29,22 +47,46 @@ function App() {
             <section className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
               <StatCard
                 label="Customers"
-                value={24}
+                value={customerCount}
                 description="Total active customers"
               />
-
               <StatCard
                 label="Today's Appointments"
-                value={12}
+                value={appointmentCount}
                 description="Scheduled for today"
               />
-
               <StatCard
                 label="Pending"
-                value={8}
+                value={pendingCount}
                 description="Appointments awaiting confirmation"
               />
             </section>
+
+            <div className="mt-6 flex flex-wrap gap-85">
+              <button
+                type="button"
+                onClick={handleAddCustomer}
+                className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
+              >
+                Add Customer
+              </button>
+
+              <button
+                type="button"
+                onClick={handleAddAppointment}
+                className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+              >
+                Add Appointment
+              </button>
+
+              <button
+                type="button"
+                onClick={handleCompleteAppointment}
+                className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+              >
+                Complete Appointment
+              </button>
+            </div>
           </main>
         </div>
       </div>
