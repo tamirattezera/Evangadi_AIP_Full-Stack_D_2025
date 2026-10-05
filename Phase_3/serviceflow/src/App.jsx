@@ -6,6 +6,10 @@ import StatCard from "./components/dashboard/StatCard";
 import AppointmentList from "./components/appointments/AppointmentList";
 
 function App() {
+  // ============================================================
+  // STATE
+  // ============================================================
+
   // Source of truth for customers
   const [customerCount, setCustomerCount] = useState(24);
 
@@ -13,7 +17,7 @@ function App() {
   const [appointments, setAppointments] = useState([
     {
       id: 1,
-      customer: "Eden Rodas",
+      customer: "Eden Yeaulshet",
       status: "confirmed",
     },
     {
@@ -28,12 +32,35 @@ function App() {
     },
   ]);
 
-  // Derived values
+  // User's currently selected appointment filter
+  const [statusFilter, setStatusFilter] = useState("all");
+
+  // ============================================================
+  // DERIVED VALUES
+  // ============================================================
+
+  // Derived from appointments — no separate state needed
   const appointmentCount = appointments.length;
 
+  // Derived from appointments — no separate state needed
   const pendingCount = appointments.filter(
     (appointment) => appointment.status === "pending",
   ).length;
+
+  // Derived from appointments + statusFilter
+  const filteredAppointments =
+    statusFilter === "all"
+      ? appointments
+      : appointments.filter(
+          (appointment) => appointment.status === statusFilter,
+        );
+
+  // Available appointment filters
+  const filters = ["all", "pending", "confirmed", "completed"];
+
+  // ============================================================
+  // EVENT HANDLERS
+  // ============================================================
 
   function handleAddCustomer() {
     setCustomerCount((currentCount) => currentCount + 1);
@@ -60,6 +87,7 @@ function App() {
     );
   }
 
+
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="flex min-h-screen">
@@ -69,19 +97,26 @@ function App() {
           <Header />
 
           <main className="flex-1 p-6 lg:p-8">
+            {/* ==================================================
+                DASHBOARD INTRODUCTION
+            ================================================== */}
             <section>
               <p className="text-sm font-medium text-slate-500">
-                Monday, October 4, 2026
+                Monday, October 5, 2026
               </p>
 
               <h1 className="mt-1 text-2xl font-bold tracking-tight text-slate-900">
-                Good morning, Daniel
+                Good morning, Eden
               </h1>
 
               <p className="mt-2 text-sm text-slate-500">
                 Here's what's happening with your business today.
               </p>
             </section>
+
+            {/* ==================================================
+                DASHBOARD STATISTICS
+            ================================================== */}
             <section className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
               <StatCard
                 label="Customers"
@@ -102,7 +137,9 @@ function App() {
               />
             </section>
 
-            {/* Temporary development controls */}
+            {/* ==================================================
+                DEVELOPMENT CONTROLS
+            ================================================== */}
             <div className="mt-6 flex flex-wrap gap-4">
               <button
                 type="button"
@@ -121,8 +158,43 @@ function App() {
               </button>
             </div>
 
+            {/* ==================================================
+                APPOINTMENT FILTERS
+            ================================================== */}
+            <section className="mt-8">
+              <div>
+                <h2 className="text-sm font-semibold text-slate-900">
+                  Filter Appointments
+                </h2>
+
+                <p className="mt-1 text-xs text-slate-500">
+                  View appointments by their current status.
+                </p>
+              </div>
+
+              <div className="mt-3 flex flex-wrap gap-2">
+                {filters.map((filter) => {
+                  const isActive = statusFilter === filter;
+
+                  return (
+                    <button
+                      key={filter}
+                      type="button"
+                      onClick={() => setStatusFilter(filter)}
+                      className={
+                        isActive
+                          ? "rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium capitalize text-white"
+                          : "rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium capitalize text-slate-700 hover:bg-slate-50"
+                      }
+                    >
+                      {filter}
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
             <AppointmentList
-              appointments={appointments}
+              appointments={filteredAppointments}
               onComplete={handleCompleteAppointment}
             />
           </main>
