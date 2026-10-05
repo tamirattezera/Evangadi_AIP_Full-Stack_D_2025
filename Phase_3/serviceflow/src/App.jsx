@@ -3,14 +3,17 @@ import { useState } from "react";
 import Header from "./components/layout/Header";
 import Sidebar from "./components/layout/Sidebar";
 import StatCard from "./components/dashboard/StatCard";
+import AppointmentList from "./components/appointments/AppointmentList";
 
 function App() {
+  // Source of truth for customers
   const [customerCount, setCustomerCount] = useState(24);
 
+  // Source of truth for appointments
   const [appointments, setAppointments] = useState([
     {
       id: 1,
-      customer: "Abebe Kebede",
+      customer: "Eden Rodas",
       status: "confirmed",
     },
     {
@@ -20,16 +23,12 @@ function App() {
     },
     {
       id: 3,
-      customer: "Daniel Bekele",
-      status: "pending",
-    },
-    {
-      id: 4,
-      customer: "Tamirat",
+      customer: "Daniel John",
       status: "pending",
     },
   ]);
 
+  // Derived values
   const appointmentCount = appointments.length;
 
   const pendingCount = appointments.filter(
@@ -51,10 +50,10 @@ function App() {
     ]);
   }
 
-  function handleCompleteAppointment() {
+  function handleCompleteAppointment(id) {
     setAppointments((currentAppointments) =>
       currentAppointments.map((appointment) =>
-        appointment.id === 2
+        appointment.id === id
           ? { ...appointment, status: "completed" }
           : appointment,
       ),
@@ -83,7 +82,6 @@ function App() {
                 Here's what's happening with your business today.
               </p>
             </section>
-
             <section className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
               <StatCard
                 label="Customers"
@@ -104,6 +102,7 @@ function App() {
               />
             </section>
 
+            {/* Temporary development controls */}
             <div className="mt-6 flex flex-wrap gap-4">
               <button
                 type="button"
@@ -120,15 +119,12 @@ function App() {
               >
                 Add Appointment
               </button>
-
-              <button
-                type="button"
-                onClick={handleCompleteAppointment}
-                className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
-              >
-                Complete Appointment
-              </button>
             </div>
+
+            <AppointmentList
+              appointments={appointments}
+              onComplete={handleCompleteAppointment}
+            />
           </main>
         </div>
       </div>
