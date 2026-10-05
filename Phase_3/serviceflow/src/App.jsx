@@ -6,19 +6,59 @@ import StatCard from "./components/dashboard/StatCard";
 
 function App() {
   const [customerCount, setCustomerCount] = useState(24);
-  const [appointmentCount, setAppointmentCount] = useState(12);
-  const [pendingCount, setPendingCount] = useState(8);
+
+  const [appointments, setAppointments] = useState([
+    {
+      id: 1,
+      customer: "Abebe Kebede",
+      status: "confirmed",
+    },
+    {
+      id: 2,
+      customer: "Sara Ali",
+      status: "pending",
+    },
+    {
+      id: 3,
+      customer: "Daniel Bekele",
+      status: "pending",
+    },
+    {
+      id: 4,
+      customer: "Tamirat",
+      status: "pending",
+    },
+  ]);
+
+  const appointmentCount = appointments.length;
+
+  const pendingCount = appointments.filter(
+    (appointment) => appointment.status === "pending",
+  ).length;
 
   function handleAddCustomer() {
     setCustomerCount((currentCount) => currentCount + 1);
   }
 
   function handleAddAppointment() {
-    setAppointmentCount((currentCount) => currentCount + 1);
+    setAppointments((currentAppointments) => [
+      ...currentAppointments,
+      {
+        id: currentAppointments.length + 1,
+        customer: "New Customer",
+        status: "pending",
+      },
+    ]);
   }
 
   function handleCompleteAppointment() {
-    setPendingCount((currentCount) => Math.max(0, currentCount - 1));
+    setAppointments((currentAppointments) =>
+      currentAppointments.map((appointment) =>
+        appointment.id === 2
+          ? { ...appointment, status: "completed" }
+          : appointment,
+      ),
+    );
   }
 
   return (
@@ -50,11 +90,13 @@ function App() {
                 value={customerCount}
                 description="Total active customers"
               />
+
               <StatCard
                 label="Today's Appointments"
                 value={appointmentCount}
                 description="Scheduled for today"
               />
+
               <StatCard
                 label="Pending"
                 value={pendingCount}
@@ -62,7 +104,7 @@ function App() {
               />
             </section>
 
-            <div className="mt-6 flex flex-wrap gap-85">
+            <div className="mt-6 flex flex-wrap gap-4">
               <button
                 type="button"
                 onClick={handleAddCustomer}
