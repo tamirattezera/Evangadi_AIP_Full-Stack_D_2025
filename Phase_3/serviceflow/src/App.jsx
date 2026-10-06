@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Header from "./components/layout/Header";
 import Sidebar from "./components/layout/Sidebar";
@@ -54,6 +54,9 @@ function App() {
       : appointments.filter(
           (appointment) => appointment.status === statusFilter,
         );
+  useEffect(() => {
+    document.title = `ServiceFlow — ${appointmentCount} Appointments`;
+  }, [appointmentCount]);
 
   // Available appointment filters
   const filters = ["all", "pending", "confirmed", "completed"];
@@ -86,7 +89,6 @@ function App() {
       ),
     );
   }
-
 
   return (
     <div className="min-h-screen bg-slate-50">
